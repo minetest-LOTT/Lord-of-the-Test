@@ -1,37 +1,46 @@
+local MP = minetest.get_modpath(
+    minetest.get_current_modname(
+    )
+)
+
+local S, NS = dofile(
+    MP .. "/intllib.lua"
+)
+
 lottclasses = {}
 
 minetest.register_privilege("GAMEwizard", {
-	description = "A wizard player",
+	description = S("A wizard player"),
 	give_to_singleplayer = false,
 	give_to_admin = true,
 })
 
 minetest.register_privilege("GAMEmale", {
-	description = "A male player",
+	description = S("A male player"),
 	give_to_singleplayer = false,
 })
 minetest.register_privilege("GAMEfemale", {
-	description = "A female player",
+	description = S("A female player"),
 	give_to_singleplayer = false,
 })
 minetest.register_privilege("GAMEdwarf", {
-	description = "A dwarf player",
+	description = S("A dwarf player"),
 	give_to_singleplayer = false,
 })
 minetest.register_privilege("GAMEelf", {
-	description = "An elf player",
+	description = S("An elf player"),
 	give_to_singleplayer = false,
 })
 minetest.register_privilege("GAMEman", {
-	description = "A human player",
+	description = S("A human player"),
 	give_to_singleplayer = false,
 })
 minetest.register_privilege("GAMEorc", {
-	description = "An orc player",
+	description = S("An orc player"),
 	give_to_singleplayer = false,
 })
 minetest.register_privilege("GAMEhobbit", {
-	description = "A hobbit player",
+	description = S("A hobbit player"),
 	give_to_singleplayer = false,
 })
 
@@ -40,23 +49,23 @@ dofile(minetest.get_modpath("lottclasses").."/allies.lua")
 
 local race_chooser = "size[8,6]"..
 	"background[8,6;1,1;gui_formbg.png;true]"..
-	"label[0,0;" .. minetest.colorize("#A52A2A", "Please select the race you wish to be") .. "]"..
+	"label[0,0;" .. minetest.colorize("#A52A2A", S("Please select the race you wish to be")) .. "]"..
 	"image[0.25,1.4;0.75,0.75;dwarf.png]"..
-	"button_exit[1,1.5;2,0.5;dwarf;Dwarf]"..
+	"button_exit[1,1.5;2,0.5;dwarf;" .. S("Dwarf") .. "]"..
 	"image[4.75,1.4;0.75,0.75;elf.png]"..
-	"button_exit[5.5,1.5;2,0.5;elf;Elf]"..
+	"button_exit[5.5,1.5;2,0.5;elf;" .. S("Elf") .. "]"..
 	"image[0.25,2.4;0.75,0.75;man.png]"..
-	"button_exit[1,2.5;2,0.5;man;Man]"..
+	"button_exit[1,2.5;2,0.5;man;" .. S("Man") .. "]"..
 	"image[4.75,2.4;0.75,0.75;orc.png]"..
-	"button_exit[5.5,2.5;2,0.5;orc;Orc]"..
+	"button_exit[5.5,2.5;2,0.5;orc;" .. S("Orc") .. "]"..
 	"image[0.25,3.4;0.75,0.75;hobbit.png]"..
-	"button_exit[1,3.5;2,0.5;hobbit;Hobbit]"..
-	"dropdown[5.5,3.4;2;gender;Male,Female;1]"
+	"button_exit[1,3.5;2,0.5;hobbit;" .. S("Hobbit") .. "]"..
+	"dropdown[5.5,3.4;2;gender;" .. S("Male") .. "," .. S("Female") .. ";1]"
 
-local fly_stuff = "button[1,4.75;2,0.5;fast;Fast]" ..
-	"button[3,4.75;2,0.5;fly;Fly]" ..
+local fly_stuff = "button[1,4.75;2,0.5;fast;" .. S("Fast") .. "]" ..
+	"button[3,4.75;2,0.5;fly;" .. S("Fly") .. "]" ..
 	"button[5,4.75;2,0.5;noclip;Noclip]" ..
-	"button[2.5,5.5;3,0.5;fast_fly_noclip;Fast, Fly & Noclip]"
+	"button[2.5,5.5;3,0.5;fast_fly_noclip;" .. S("Fast") .. ", " .. S("Fly") .. " & Noclip]"
 
 local function give_stuff_dwarf(player)
 	local inv = player:get_inventory()
@@ -144,7 +153,7 @@ minetest.register_on_newplayer(function(player)
 		
 		minetest.after(5, function()
 			if player == nil then return end
-			minetest.chat_send_player(name, minetest.colorize("green", "Starter mob immunity granted for "..immune_amt/ 60 .." minutes! Travel to a safe area!"))
+			minetest.chat_send_player(name, minetest.colorize("green", string.format(S("Starter mob immunity granted for %s minutes!"), (immune_amt/60)) .. " " .. S("Travel to a safe area!")))
 		end)
 		
 		for i = 1, immune_amt do
@@ -157,7 +166,7 @@ minetest.register_on_newplayer(function(player)
 	
 		minetest.after(immune_amt+1, function()
 			player:set_attribute("lott:immunity", nil)
-			minetest.chat_send_player(name, minetest.colorize("orange", "Your starter mob immunity has expired!"))
+			minetest.chat_send_player(name, minetest.colorize("orange", S("Your starter mob immunity has expired!")))
 			armor:set_player_armor(player)
 		end)
 	end
@@ -212,8 +221,8 @@ minetest.register_on_joinplayer(function(player)
 			return
 		end
 	
-		minetest.chat_send_player(name, minetest.colorize("green", "Your starter mob immunity has resumed!"))
-		minetest.chat_send_player(name, minetest.colorize("green", "You still have "..tonumber(player:get_attribute("lott:immunity")) / 60 .." minutes left!"))
+		minetest.chat_send_player(name, minetest.colorize("green", S("Your starter mob immunity has resumed!")))
+		minetest.chat_send_player(name, minetest.colorize("green", string.format(S("You still have %s minutes left!"), (tonumber(player:get_attribute("lott:immunity")) / 60))))
 	
 		for i = 1, tonumber(player:get_attribute("lott:immunity")) do
 			if not tonumber(player:get_attribute("lott:immunity")) then
@@ -232,13 +241,13 @@ minetest.register_on_joinplayer(function(player)
 			player:set_attribute("lott:immunity", nil)
 			armor:set_player_armor(player)
 		
-			minetest.chat_send_player(name, minetest.colorize("orange", "Your starter mob immunity has expired!"))
+			minetest.chat_send_player(name, minetest.colorize("orange", S("Your starter mob immunity has expired!")))
 		end)
 	end
 end)
 
 local function player_race_stuff(race, text, mf, func, name, privs, player)
-	minetest.chat_send_player(name, "You are now a member of the race of " .. text ..", go forth into the world.")
+	minetest.chat_send_player(name, string.format(S("You are now a member of the race of %s, go forth into the world."), text))
 	privs["GAME" .. race] = true
 	privs["GAME" .. mf] = true
 	minetest.set_player_privs(name, privs)
@@ -259,30 +268,30 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname ~= "race_selector" then return end
 	local name = player:get_player_name()
 	local privs = minetest.get_player_privs(name)
-	if fields.gender == "Male" then
+	if fields.gender == S("Male") then
 		if fields.dwarf then
-			player_race_stuff("dwarf", "dwarves", "male", give_stuff_dwarf, name, privs, player)
+			player_race_stuff("dwarf", S("dwarves"), "male", give_stuff_dwarf, name, privs, player)
 			
 		elseif fields.elf then
-			player_race_stuff("elf", "elves", "male", give_stuff_elf, name, privs, player)
+			player_race_stuff("elf", S("elves"), "male", give_stuff_elf, name, privs, player)
 		elseif fields.man then
-			player_race_stuff("man", "men", "male", give_stuff_man, name, privs, player)
+			player_race_stuff("man", S("men"), "male", give_stuff_man, name, privs, player)
 		elseif fields.orc then
-			player_race_stuff("orc", "orcs", "male", give_stuff_orc, name, privs, player)
+			player_race_stuff("orc", S("orcs"), "male", give_stuff_orc, name, privs, player)
 		elseif fields.hobbit then
-			player_race_stuff("hobbit", "hobbits", "male", give_stuff_hobbit, name, privs, player)
+			player_race_stuff("hobbit", S("hobbits"), "male", give_stuff_hobbit, name, privs, player)
 		end
-	elseif fields.gender == "Female" then
+	elseif fields.gender == S("Female") then
 		if fields.dwarf then
-			player_race_stuff("dwarf", "dwarves", "female", give_stuff_dwarf, name, privs, player)
+			player_race_stuff("dwarf", S("dwarves"), "female", give_stuff_dwarf, name, privs, player)
 		elseif fields.elf then
-			player_race_stuff("elf", "elves", "female", give_stuff_elf, name, privs, player)
+			player_race_stuff("elf", S("elves"), "female", give_stuff_elf, name, privs, player)
 		elseif fields.man then
-			player_race_stuff("man", "men", "female", give_stuff_man, name, privs, player)
+			player_race_stuff("man", S("men"), "female", give_stuff_man, name, privs, player)
 		elseif fields.orc then
-			player_race_stuff("orc", "orcs", "female", give_stuff_orc, name, privs, player)
+			player_race_stuff("orc", S("orcs"), "female", give_stuff_orc, name, privs, player)
 		elseif fields.hobbit then
-			player_race_stuff("hobbit", "hobbits", "female", give_stuff_hobbit, name, privs, player)
+			player_race_stuff("hobbit", S("hobbits"), "female", give_stuff_hobbit, name, privs, player)
 		end
 	end
 	if fields.fast then
@@ -306,21 +315,21 @@ end)
 
 minetest.register_chatcommand("race", {
 	params = "<name>",
-	description = "print out privileges of player",
+	description = S("print out the race of a player"),
 	func = function(name, param)
 		param = (param ~= "" and param or name)
 		if minetest.check_player_privs(param, {GAMEwizard = true}) then
-			return true, "Race of " .. param .. ": Wizard"
+			return true, string.format(S("Race of %s"), param) .. ": " .. S("Wizard")
 		elseif minetest.check_player_privs(param, {GAMEdwarf = true}) then
-			return true, "Race of " .. param .. ": Dwarf"
+			return true, string.format(S("Race of %s"), param) .. ": " .. S("Dwarf")
 		elseif minetest.check_player_privs(param, {GAMEelf = true}) then
-			return true, "Race of " .. param .. ": Elf"
+			return true, string.format(S("Race of %s"), param) .. ": " .. S("Elf")
 		elseif minetest.check_player_privs(param, {GAMEman = true}) then
-			return true, "Race of " .. param .. ": Man"
+			return true, string.format(S("Race of %s"), param) .. ": " .. S("Man")
 		elseif minetest.check_player_privs(param, {GAMEorc = true}) then
-			return true, "Race of " .. param .. ": Orc"
+			return true, string.format(S("Race of %s"), param) .. ": " .. S("Orc")
 		elseif minetest.check_player_privs(param, {GAMEhobbit = true}) then
-			return true, "Race of " .. param .. ": Hobbit"
+			return true, string.format(S("Race of %s"), param) .. ": " .. S("Hobbit")
 		elseif minetest.check_player_privs(param, {shout = true}) ~= nil then
 			if param == name then
 				if minetest.is_singleplayer() then
@@ -329,10 +338,10 @@ minetest.register_chatcommand("race", {
 					minetest.show_formspec(name, "race_selector", race_chooser)
 				end
 			else
-				return true, param .. " has not chosen a race!"
+				return true, string.format(S("%s has not chosen a race!"), param)
 			end
 		else
-			return true, param .. " does not exist!"
+			return true, string.format(S("%s does not exist!"), param)
 		end
 	end,
 })

@@ -1,3 +1,12 @@
+local MP = minetest.get_modpath(
+    minetest.get_current_modname(
+    )
+)
+
+local S, NS = dofile(
+    MP .. "/intllib.lua"
+)
+
 minetest.register_alias("lottother:blue_torch", "lottblocks:elf_torch")
 minetest.register_alias("lottother:orc_torch", "lottblocks:orc_torch")
 minetest.register_alias("lottother:lamp_wood", "lottblocks:lamp_wood")
@@ -195,7 +204,7 @@ lottblocks.register_lamp("pine_orc", "Mordor Pine", "lottblocks_orc_lamp_inv_pin
 lottblocks.register_lamp("lebethron_orc", "Mordor Lebethron", "lottblocks_orc_lamp_inv_lebethron.png", "lottblocks_orc_brick.png", "lottplants_lebethronwood.png", "lottplants_lebethronwood.png", "lottblocks_orc_lamp_active_lebethron.png",  "lottplants:lebethronwood", "orc")
 
 minetest.register_node("lottblocks:elf_torch", {
-	description = "Elf Torch",
+	description = S("Elf Torch"),
 	drawtype = "torchlike",
 	tiles = {
 		{name="lottblocks_elf_torch_on_floor_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=3.0}},
@@ -229,7 +238,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("lottblocks:orc_torch", {
-	description = "Orc Torch",
+	description = S("Orc Torch"),
 	drawtype = "torchlike",
 	tiles = {
 		{name="lottblocks_orc_torch_on_floor_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=3.0}},
@@ -265,7 +274,7 @@ minetest.register_craft({
 -- Made by lumidify - lottblocks_mithril_stonelamp.png
 -- created by modifying darkage_lamp.png
 minetest.register_node("lottblocks:mithril_stonelamp", {
-	description = "Mithril Stonelamp",
+	description = S("Mithril Stonelamp"),
 	tiles = { "lottblocks_mithril_stonelamp.png" },
 	paramtype = "light",
 	sunlight_propagates = true,
